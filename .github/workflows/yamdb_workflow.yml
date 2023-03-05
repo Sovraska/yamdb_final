@@ -89,8 +89,8 @@ jobs:
             sudo docker pull sovraska/infra:latest
             cd infra
             sudo docker-compose up -d 
-            sudo docker compose exec yamdb python manage.py migrate
-            sudo docker compose exec yamdb python manage.py collectstatic --noinput
+#            sudo docker compose exec yamdb python manage.py migrate
+#            sudo docker compose exec yamdb python manage.py collectstatic --noinput
 
       - name: Send message if deploy failed
         if: ${{ failure() }}
