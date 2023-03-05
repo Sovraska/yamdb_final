@@ -49,7 +49,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          file: api_yamdb/Dockerfile
+          context: ./api_yamdb/
           tags: sovraska/infra:latest
 
       - name: Send message if build_and_push_to_docker_hub failed
