@@ -40,17 +40,26 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Login to Docker
-
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Push to Docker Hub
 
+      - name: Push to Docker Hub
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: sovraska/infra:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/infra:latest
+
+      - name: Send message if build_and_push_to_docker_hub failed
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Ошибка при сборке/отправке образа на DockerHub  - ${{ github.repository }}
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -73,7 +82,9 @@ jobs:
             echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+            echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
             sudo docker-compose up -d 
+            sudo docker-compose exec -T web python manage.py collectstatic --noinput
 
   send_message:
     runs-on: ubuntu-latest
