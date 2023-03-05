@@ -9,7 +9,6 @@ services:
       - ./.env
 
   web:
-    build: ./
     image: sovraska/infra-web:latest
     restart: always
     volumes:
