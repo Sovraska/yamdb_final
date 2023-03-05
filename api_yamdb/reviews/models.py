@@ -4,7 +4,6 @@ from django.db import models
 
 from library.models import Title
 
-
 CustomUser = get_user_model()
 
 

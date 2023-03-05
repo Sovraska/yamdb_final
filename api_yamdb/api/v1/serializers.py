@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from library.models import Category, Genre, Title
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
+
+from library.models import Category, Genre, Title
 from reviews.models import Comment, Review
 
 CustomUser = get_user_model()
