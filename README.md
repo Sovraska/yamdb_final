@@ -1,6 +1,6 @@
 # Api_yamdb
 
-https://github.com/sovraska/yamdb_final/actions/workflows/.github/workflows/main.yml/badge.svg
+![yamdb_final](https://github.com/sovraska/yamdb_final/actions/workflows/.github/workflows/main.yml/badge.svg)
 
 Этот **Backend** Создан для Взаимодействия с **Frontend** частью Проекта.  
 
