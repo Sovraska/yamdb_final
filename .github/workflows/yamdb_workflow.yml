@@ -75,6 +75,9 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           context: infra
           script: |
+            rm -rf yamdb_final
+            git clone ${{ secrets.REPOSITORY }}
+            cd yamdb_final/infra
             sudo docker-compose stop 
             sudo docker-compose rm  infra 
             touch .env
