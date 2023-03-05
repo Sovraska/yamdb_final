@@ -1,7 +1,8 @@
+![yamdb_final](https://github.com/sovraska/yamdb_final/actions/workflows/.github/workflows/yamdb_workflow.yml/badge.svg?branch=master&event=push)
 # Yamdb_final  CI/CD 
 
 ## Cтек Разработки
-![yamdb_final](https://github.com/sovraska/yamdb_final/actions/workflows/.github/workflows/yamdb_workflow.yml/badge.svg)
+
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat&logo=Python&logoColor=56C0C0&color=008080)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/-Django-464646?style=flat&logo=Django&logoColor=56C0C0&color=008080)](https://www.djangoproject.com/)
 [![Django REST Framework](https://img.shields.io/badge/-Django%20REST%20Framework-464646?style=flat&logo=Django%20REST%20Framework&logoColor=56C0C0&color=008080)](https://www.django-rest-framework.org/)
@@ -65,8 +66,6 @@ PASSPHRASE - кодовая фраза для ssh-ключа
 DB_ENGINE - django.db.backends.postgresql
 DB_HOST - db
 DB_PORT - 5432
-SECRET_KEY - секретный ключ приложения django (необходимо чтобы были экранированы или отсутствовали скобки)
-ALLOWED_HOSTS - список разрешённых адресов
 TELEGRAM_TO - id своего телеграм-аккаунта (можно узнать у @userinfobot, команда /start)
 TELEGRAM_TOKEN - токен бота (получить токен можно у @BotFather, /token, имя бота)
 DB_NAME - postgres (по умолчанию)
@@ -76,36 +75,42 @@ POSTGRES_PASSWORD - postgres (по умолчанию)
 
 
 
-# Как запустить проект:
-Клонируйте репозиторий `git@github.com:Sovraska/infra_sp2.git`
-
-- Создайте `.env` файл в директории `infra/`, в котором должны содержаться следующие переменные:
- 
-    >DB_ENGINE=django.db.backends.postgresql\
-    DB_NAME= # название БД\ 
-    POSTGRES_USER= # ваше имя пользователя\
-    POSTGRES_PASSWORD= # пароль для доступа к БД\
-    DB_HOST=db\
-    DB_PORT=5432\
-
-- Из папки `infra/` соберите образ при помощи docker-compose
-`$ docker-compose up -d --build`
+## Как запустить проект на сервере:
 
 
-- Примените миграции
-`$ docker-compose exec web python manage.py migrate`
+Установите Docker и Docker-compose:
+```
+sudo apt install docker.io
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+Проверьте корректность установки Docker-compose:
+```
+sudo  docker-compose --version
+```
+Создайте папку `nginx`:
+```
+mkdir nginx
+```
+### После успешного деплоя:
+Соберите статические файлы (статику):
+```
+docker-compose exec web python manage.py collectstatic --no-input
+```
+Примените миграции:
+```
+docker-compose exec web python manage.py makemigrations
+docker-compose exec web python manage.py migrate --noinput
+```
+Создайте суперпользователя:
+```
+docker-compose exec web python manage.py createsuperuser
 
-
-- Соберите статику
-`$ docker-compose exec web python manage.py collectstatic --no-input`
-
-
-- Для доступа к админке не забудьте создать суперюзера  
-`$ docker-compose exec web python manage.py createsuperuser`
-
-
-- Что бы Можно было протестировать работу Предлагаем вам Установить Фикстуры  
-`$ docker-compose exec web python manage.py loaddata fixtures.json`
+```
+или
+```
+docker-compose exec web python manage.py loaddata fixtures.json
+```
 
 # Где Можно Посмотреть на примеры запросов к API ?
 Например, после запуска проекта можно посмотреть [Документацию](http://127.0.0.1:8000/redoc/).
