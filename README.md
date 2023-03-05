@@ -1,5 +1,7 @@
 # Api_yamdb
 
+![yamdb_final](https://github.com/sovraska/yamdb_final/actions/workflows/.github/workflows/main.yml/badge.svg)
+
 Этот **Backend** Создан для Взаимодействия с **Frontend** частью Проекта.  
 
 В основном он нужен для обращения к **базе данных** И получения нужной информации.
@@ -40,8 +42,6 @@
 
 - Что бы Можно было протестировать работу Предлагаем вам Установить Фикстуры  
 `$ docker-compose exec web python manage.py loaddata fixtures.json`
-
-![yamdb_final](https://github.com/sovraska/yamdb_final/actions/workflows/.github/workflows/main.yml/badge.svg?event=push)
 
 # Где Можно Посмотреть на примеры запросов к API ?
 Например, после запуска проекта можно посмотреть [Документацию](http://127.0.0.1:8000/redoc/).
