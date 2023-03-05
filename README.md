@@ -1,4 +1,5 @@
-![yamdb_final](https://github.com/sovraska/yamdb_final/actions/workflows/.github/workflows/yamdb_workflow.yml/badge.svg?branch=master&event=push)
+![yamdb_final](https://github.com/sovraska/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg?branch=master&event=push)
+
 # Yamdb_final  CI/CD 
 
 ## Cтек Разработки
