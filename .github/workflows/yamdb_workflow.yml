@@ -75,8 +75,8 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           context: ./yamdb_final/infra/
           script: |
-            sudo docker-compose stop -f infra/docker-compose.yml
-            sudo docker-compose rm infra -f infra/docker-compose.yml
+            sudo docker-compose -f infra/docker-compose.yml stop 
+            sudo docker-compose -f infra/docker-compose.yml rm  infra 
             touch .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env
@@ -85,8 +85,8 @@ jobs:
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             sudo docker-compose up -d -f infra/docker-compose.yml
-            sudo docker compose exec yamdb python manage.py migrate -f infra/docker-compose.yml
-            sudo docker compose exec yamdb python manage.py collectstatic --noinput -f infra/docker-compose.yml
+            sudo docker-compose -f infra/docker-compose.yml exec yamdb python manage.py migrate 
+            sudo docker-compose -f infra/docker-compose.yml exec yamdb python manage.py collectstatic --noinput 
 
       - name: Send message if deploy failed
         if: ${{ failure() }}
