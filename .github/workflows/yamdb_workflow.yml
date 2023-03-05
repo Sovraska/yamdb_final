@@ -77,7 +77,6 @@ jobs:
           script: |
             sudo docker-compose stop 
             sudo docker-compose rm  infra 
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/infra:latest
             touch .env
             
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
@@ -86,10 +85,7 @@ jobs:
             echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-            
-            sudo docker-compose up -d
-            sudo docker-compose exec python manage.py migrate 
-            sudo docker-compose exec python manage.py collectstatic --noinput 
+            sudo docker-compose up -d 
 
       - name: Send message if deploy failed
         if: ${{ failure() }}
