@@ -49,7 +49,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/infra:latest
+          tags: sovraska/infra:latest
 
       - name: Send message if build_and_push_to_docker_hub failed
         if: ${{ failure() }}
