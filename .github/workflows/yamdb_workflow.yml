@@ -76,7 +76,7 @@ jobs:
           script: |
             sudo docker compose stop
             sudo docker system prune -f
-            sudo docker image rm infra
+            sudo docker image rm infra_web
             rm .env
             touch .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
