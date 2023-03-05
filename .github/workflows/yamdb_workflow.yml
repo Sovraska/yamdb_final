@@ -75,18 +75,18 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           context: infra
           script: |
-            rm -rf yamdb_final
-            git clone ${{ secrets.REPOSITORY }}
-            cd yamdb_final/infra
             sudo docker-compose stop 
             sudo docker-compose rm  infra 
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/infra:latest
             touch .env
+            
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env
             echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
             echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+            
             sudo docker-compose up -d
             sudo docker-compose exec python manage.py migrate 
             sudo docker-compose exec python manage.py collectstatic --noinput 
@@ -111,4 +111,4 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: ${{ github.workflow }} успешно выполнен!
+          message: ${{ github.workflow }} успешно выполнен! Коммит  ${{ github.event.commits[0].message }}
