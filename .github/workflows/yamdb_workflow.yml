@@ -87,6 +87,7 @@ jobs:
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             sudo docker login
             sudo docker pull sovraska/infra:latest
+            cd infra
             sudo docker-compose up -d 
             sudo docker compose exec yamdb python manage.py migrate
             sudo docker compose exec yamdb python manage.py collectstatic --noinput
