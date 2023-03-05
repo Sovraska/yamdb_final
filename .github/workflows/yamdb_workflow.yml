@@ -87,6 +87,16 @@ jobs:
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
             sudo docker-compose up -d 
             sudo docker-compose exec -T web python manage.py collectstatic --noinput
+      - name: Send message if deploy failed
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Ошибка при развёртке проекта На хосте - ${{ github.repository }}
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
 
   send_message:
     runs-on: ubuntu-latest
