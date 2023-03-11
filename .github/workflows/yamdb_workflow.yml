@@ -88,6 +88,10 @@ jobs:
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
 
             sudo docker pull sovraska/infra:latest
+            
+            docker-compose exec sovraska/infra python manage.py collectstatic --no-input
+            docker-compose exec sovraska/infra python manage.py makemigrations
+            docker-compose exec sovraska/infra python manage.py migrate --noinput
             sudo docker-compose up -d 
 
       - name: Send message if deploy failed
