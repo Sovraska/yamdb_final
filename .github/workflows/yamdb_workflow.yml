@@ -89,9 +89,9 @@ jobs:
 
             sudo docker pull sovraska/infra:latest
             
-            sudo docker-compose exec sovraska/infra python manage.py collectstatic --no-input
-            sudo docker-compose exec sovraska/infra python manage.py makemigrations
-            sudo docker-compose exec sovraska/infra python manage.py migrate --noinput
+            sudo docker exec -ti sovraska_web_1 python manage.py collectstatic --no-input
+            sudo docker exec -ti sovraska_web_1 python manage.py makemigrations
+            sudo docker exec -ti sovraska_web_1 python manage.py migrate --noinput
             sudo docker-compose up -d 
 
       - name: Send message if deploy failed
